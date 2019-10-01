@@ -31,6 +31,11 @@ mystery xs = foldr (++) [] (map sing xs)
 -- and the result array is used on the foldr function, with the accumulator value is []
 -- so its basically returning the array of arrays into a single array (flat map)
 
+-- If id is the polymorphic identity function, defined by id x = x, explain the
+-- behavior of the expressions (id . f) (f . id) (id f)
+
+-- it behaves the same. the identity function returns the exact type of anything returned before its execution,
+-- so any way we compose it to the f function it will be the same as calling f directly.
 
 
 -- (*) Define the function flip :: (a -> b -> c) -> (b -> a -> c)
