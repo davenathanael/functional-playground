@@ -17,6 +17,8 @@ data Color = Black | Blue | Green | Cyan
            | Red | Magenta | Yellow | White
       deriving (Eq, Ord, Bounded, Enum, Ix, Show, Read)
 
+type Energy = Maybe Double
+
 data RobotState
    = RobotState
          { position  :: Position
@@ -25,8 +27,10 @@ data RobotState
          , color     :: Color
          , treasure  :: [Position]
          , pocket    :: Int
+         , energy    :: Energy
          }
       deriving Show
+
 
 newtype Robot a
   = Robot (RobotState)
@@ -37,8 +41,8 @@ right d = toEnum $ succ (fromEnum d) `mod` 4
 left :: Direction -> Direction
 left d = toEnum $ pred (fromEnum d) `mod` 4
 
-updateState :: (RobotState -> RobotState) -> Robot
-updateState u = Robot (\s -> return (u s, ()))
+-- updateState :: (RobotState -> RobotState) -> Robot
+-- updateState u = Robot (\s -> return (u s, ()))
 
 -- turnLeft :: Robot
 -- turnLeft = updateState (\s -> s {facing=left (facing s)})
@@ -46,5 +50,3 @@ updateState u = Robot (\s -> return (u s, ()))
 -- turnRight :: Robot
 -- turnRight = updateState (\s -> s {facing=right (facing s)})
 
--- testFunc :: RobotState -> RobotState
--- testFunc = (\s -> s {facing=right (facing s)})
