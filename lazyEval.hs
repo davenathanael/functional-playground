@@ -24,3 +24,4 @@ primeNums = sieve [2..]
 
 -- 6. Buatlah definisi infinite list dari triple pythagoras. List tersebut terdiri dari element
 --    triple bilangan bulat positif yang mengikut persamaan pythagoras x^2 + y^2 = z^2
+triPyth = [(x,y,z) | z <- [5..], y <- [4..z], x <- [3..y], x^2+y^2==z^2]
