@@ -1,4 +1,9 @@
 -- 1. Uraikan langkah evaluasi dari ekspresi berikut: [ x+y | x <- [1 .. 4], y <- [2 .. 4], x > y ]
+--    x = 1, 2, 3, 4
+--    y = 2, 3, 4
+--    untuk semua kemungkinan pasangan nilai x dan y,
+--    pasangan yang x > y akan dipilih
+--    dihasilkan list baru dengan nilai x+y dari x dan y yang dipilih
 -- 2. Buatlah fungsi divisor yang menerima sebuah bilangan bulat n dan mengembalikan
 --    list bilangan bulat positif yang membagi habis n
 -- 3. Buatlah definisi quick sort menggunakan list comprehension.
