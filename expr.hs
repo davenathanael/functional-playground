@@ -32,14 +32,31 @@ mapExpr f (e1 :* e2) = mapExpr f e1 :* mapExpr f e2
 mapExpr f (e1 :/ e2) = mapExpr f e1 :/ mapExpr f e2
 mapExpr f (Let var e1 e2) = Let var e1 (mapExpr f e2)
 
-foldExpr :: (Float -> Float -> Float) -> Float -> CExpr -> Float
-foldExpr f acc (Val val) = f acc val
-foldExpr f acc (Var _) = acc
-foldExpr f acc letExpr@(Let var e1 e2) = f acc (evaluate letExpr)
+foldExpr :: (Float -> CExpr -> Float) -> Float -> CExpr -> Float
 foldExpr f acc (e1 :+ e2) = foldExpr f acc e1 + foldExpr f acc e2
 foldExpr f acc (e1 :- e2) = foldExpr f acc e1 - foldExpr f acc e2
 foldExpr f acc (e1 :* e2) = foldExpr f acc e1 * foldExpr f acc e2
 foldExpr f acc (e1 :/ e2) = foldExpr f acc e1 / foldExpr f acc e2
+foldExpr f acc expr = f acc expr
 
 evalFold :: CExpr -> Float
-evalFold expr = foldExpr (+) 0 expr
+evalFold expr = foldExpr evalHelper 0 expr
+
+evalHelper :: Float -> CExpr -> Float
+evalHelper acc (Val v) = acc+v
+evalHelper acc (Var _) = acc
+evalHelper acc expr@(Let _ _ _) = acc + evaluate expr
+
+isConst :: CExpr -> Bool
+isConst (Val _) = True
+isConst expr = False
+
+isVar :: CExpr -> Bool
+isVar (Var _) = True
+isVar expr = False
+
+countConst :: CExpr -> Float
+countConst expr = foldExpr (\acc exp -> if (isConst exp) then acc+1 else acc) 0 expr
+
+countVar :: CExpr -> Float
+countVar expr = foldExpr (\acc exp -> if (isVar exp) then acc+1 else acc) 0 expr
