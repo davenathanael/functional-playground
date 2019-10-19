@@ -31,3 +31,12 @@ mapExpr f (e1 :- e2) = mapExpr f e1 :- mapExpr f e2
 mapExpr f (e1 :* e2) = mapExpr f e1 :* mapExpr f e2
 mapExpr f (e1 :/ e2) = mapExpr f e1 :/ mapExpr f e2
 mapExpr f (Let var e1 e2) = Let var e1 (mapExpr f e2)
+
+foldExpr :: (Float -> Float -> Float) -> Float -> CExpr -> Float
+foldExpr f acc (Val val) = f acc val
+foldExpr f acc (Var _) = acc
+foldExpr f acc letExpr@(Let var e1 e2) = f acc (evaluate letExpr)
+foldExpr f acc (e1 :+ e2) = foldExpr f acc e1 + foldExpr f acc e2
+foldExpr f acc (e1 :- e2) = foldExpr f acc e1 - foldExpr f acc e2
+foldExpr f acc (e1 :* e2) = foldExpr f acc e1 * foldExpr f acc e2
+foldExpr f acc (e1 :/ e2) = foldExpr f acc e1 / foldExpr f acc e2
