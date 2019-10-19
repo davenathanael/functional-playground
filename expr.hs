@@ -40,3 +40,6 @@ foldExpr f acc (e1 :+ e2) = foldExpr f acc e1 + foldExpr f acc e2
 foldExpr f acc (e1 :- e2) = foldExpr f acc e1 - foldExpr f acc e2
 foldExpr f acc (e1 :* e2) = foldExpr f acc e1 * foldExpr f acc e2
 foldExpr f acc (e1 :/ e2) = foldExpr f acc e1 / foldExpr f acc e2
+
+evalFold :: CExpr -> Float
+evalFold expr = foldExpr (+) 0 expr
