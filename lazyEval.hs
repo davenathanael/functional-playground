@@ -1,3 +1,5 @@
+import Data.List
+
 -- 1. Uraikan langkah evaluasi dari ekspresi berikut: [ x+y | x <- [1 .. 4], y <- [2 .. 4], x > y ]
 --    x = 1, 2, 3, 4
 --    y = 2, 3, 4
@@ -16,7 +18,9 @@ quickSort [] = []
 quickSort (x:xs) = (quickSort [y | y <- xs, y <= x]) ++ [x] ++ (quickSort [y | y <- xs, y > x])
 
 -- 4. Buatlah definisi infinite list untuk permutation.
-
+permutate :: [a] -> [[a]]
+permutate [] = [[]]
+permutate list = [x:other | x <- ls, other <- perms (list\\[x])]
 
 -- 5. Buatlah definisi untuk memberikan infinite list dari bilangan prima menerapkan algoritma Sieve of Erastothenes.
 primeNums = sieve [2..]
