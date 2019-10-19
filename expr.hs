@@ -10,6 +10,8 @@ evaluate (a :+ b) = evaluate a + evaluate b
 evaluate (a :- b) = evaluate a - evaluate b
 evaluate (a :* b) = evaluate a * evaluate b
 evaluate (a :/ b) = evaluate a / evaluate b
+evaluate (Var v) = 0.0 -- zero value of float
+evaluate (Let var exp1 exp2) = evaluate $ substitute var exp1 exp2
 
 -- substitute any occurence of string V with the new expression 
 substitute :: String -> CExpr -> CExpr -> CExpr
