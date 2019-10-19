@@ -10,3 +10,13 @@ evaluate (a :+ b) = evaluate a + evaluate b
 evaluate (a :- b) = evaluate a - evaluate b
 evaluate (a :* b) = evaluate a * evaluate b
 evaluate (a :/ b) = evaluate a / evaluate b
+
+-- substitute any occurence of string V with the new expression 
+substitute :: String -> CExpr -> CExpr -> CExpr
+substitute newVar newExpr (Var var) = if newVar == var then newExpr else (Var var)
+substitute _ _ (Val val) = (Val val)
+substitute newVar newExpr (e1 :+ e2) = substitute newVar newExpr e1 :+ substitute newVar newExpr e2
+substitute newVar newExpr (e1 :- e2) = substitute newVar newExpr e1 :- substitute newVar newExpr e2
+substitute newVar newExpr (e1 :* e2) = substitute newVar newExpr e1 :* substitute newVar newExpr e2
+substitute newVar newExpr (e1 :/ e2) = substitute newVar newExpr e1 :/ substitute newVar newExpr e2
+substitute newVar newExpr (Let var e1 e2) = (Let var e1 (substitute newVar newExpr e2))
