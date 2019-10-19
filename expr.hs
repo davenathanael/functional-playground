@@ -22,3 +22,12 @@ substitute newVar newExpr (e1 :- e2) = substitute newVar newExpr e1 :- substitut
 substitute newVar newExpr (e1 :* e2) = substitute newVar newExpr e1 :* substitute newVar newExpr e2
 substitute newVar newExpr (e1 :/ e2) = substitute newVar newExpr e1 :/ substitute newVar newExpr e2
 substitute newVar newExpr (Let var e1 e2) = (Let var e1 (substitute newVar newExpr e2))
+
+mapExpr :: (Float -> Float) -> CExpr -> CExpr
+mapExpr f (Val a) = (Val (f a))
+mapExpr _ (Var v) = (Var v)
+mapExpr f (e1 :+ e2) = mapExpr f e1 :+ mapExpr f e2
+mapExpr f (e1 :- e2) = mapExpr f e1 :- mapExpr f e2
+mapExpr f (e1 :* e2) = mapExpr f e1 :* mapExpr f e2
+mapExpr f (e1 :/ e2) = mapExpr f e1 :/ mapExpr f e2
+mapExpr f (Let var e1 e2) = Let var e1 (mapExpr f e2)
