@@ -1,8 +1,10 @@
 module CExpr where
 
-data CExpr a = Val a | CExpr a :+ CExpr a | CExpr a :- CExpr a | CExpr a :* CExpr a | CExpr a :/ CExpr a
+data CExpr = Val Float | CExpr :+ CExpr | CExpr :- CExpr | CExpr :* CExpr | CExpr :/ CExpr
+            | Var String | Let String CExpr CExpr
+      deriving Show
 
--- evaluate :: Num a => CExpr a -> a
+evaluate :: CExpr -> Float
 evaluate (Val a) = a
 evaluate (a :+ b) = evaluate a + evaluate b
 evaluate (a :- b) = evaluate a - evaluate b
