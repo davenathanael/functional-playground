@@ -5,3 +5,6 @@ rotabc (x:str)
   | x == 'b' = 'c' : rotabc str
   | x == 'c' = 'a' : rotabc str
   | otherwise = x : rotabc str
+
+last :: [a] -> a
+last = head . reverse
